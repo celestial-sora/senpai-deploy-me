@@ -2,7 +2,7 @@ import Foundation
 
 let script: [DialogueLine] = [
     // 0: ฉาก 1 — วันแรกเข้าคณะ
-    DialogueLine(speaker: "Narrator", text: "วันแรกของการเป็นนักศึกษาคณะ Web Fullstack...", sprite: nil, background: "bg_faculty", choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: nil),
+    DialogueLine(speaker: "Narrator", text: "วันแรกของการเป็นนักศึกษาสาขาวิทยาการคอมพิวเตอร์ คณะเทคโนโลยีสารสนเทศ...", sprite: nil, background: "bg_faculty", choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: nil),
     
     // 1
     DialogueLine(speaker: "Senpai", text: "ว่าไงน้อง ตื่นเต้นมั้ย? เดี๋ยวพี่พาไปทำเว็บส่วนตัวของตัวเองกันเลย จบวันนี้ต้องได้เว็บ live จริงๆ", sprite: "senpai_smile", background: nil, choices: [

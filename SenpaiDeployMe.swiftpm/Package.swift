@@ -1,23 +1,24 @@
 // swift-tools-version: 5.6
 
 import PackageDescription
+
+#if canImport(AppleProductTypes)
 import AppleProductTypes
 
 let package = Package(
-    name: "SenpaiDeployMe",
+    name: "Senpai Deploy Me",
     platforms: [
-        .iOS("15.2")
+        .iOS("16.0")
     ],
     products: [
         .iOSApplication(
             name: "Senpai Deploy Me",
             targets: ["AppModule"],
             bundleIdentifier: "com.example.SenpaiDeployMe",
-            teamIdentifier: "",
             displayVersion: "1.0",
             bundleVersion: "1",
             appIcon: .placeholder(icon: .gamepad),
-            accentColor: .presetColor(.blue),
+            accentColor: .presetColor(.indigo),
             supportedDeviceFamilies: [
                 .pad,
                 .phone
@@ -40,3 +41,27 @@ let package = Package(
         )
     ]
 )
+#else
+let package = Package(
+    name: "Senpai Deploy Me",
+    platforms: [
+        .macOS("13.0"),
+        .iOS("16.0")
+    ],
+    products: [
+        .executable(
+            name: "SenpaiDeployMe",
+            targets: ["AppModule"]
+        )
+    ],
+    targets: [
+        .executableTarget(
+            name: "AppModule",
+            path: ".",
+            resources: [
+                .process("Resources")
+            ]
+        )
+    ]
+)
+#endif

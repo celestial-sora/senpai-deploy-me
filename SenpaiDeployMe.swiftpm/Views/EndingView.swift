@@ -5,19 +5,34 @@ struct EndingView: View {
     
     var body: some View {
         ZStack {
-            Image("bg_ending")
-                .resizable()
+            SenpaiTheme.ink
+                .ignoresSafeArea()
+            ResourceImage(name: "bg_ending", folder: "Backgrounds")
                 .scaledToFill()
                 .ignoresSafeArea()
             
-            VStack(spacing: 30) {
-                Text("จบหลักสูตร Senpai Deploy Me!")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                    .padding()
-                    .background(Color.black.opacity(0.5))
-                    .cornerRadius(15)
+            Color.black.opacity(0.32).ignoresSafeArea()
+
+            GeometryReader { geometry in
+            ScrollView(showsIndicators: false) {
+            VStack(spacing: 24) {
+                Image(systemName: "checkmark.seal.fill")
+                    .font(.system(size: 54))
+                    .foregroundStyle(SenpaiTheme.mint)
+                    .shadow(color: SenpaiTheme.mint.opacity(0.6), radius: 18)
+                VStack(spacing: 8) {
+                    Text("DEPLOYMENT COMPLETE")
+                        .font(.caption.weight(.bold))
+                        .tracking(2)
+                        .foregroundStyle(SenpaiTheme.mint)
+                    Text("จบหลักสูตร Senpai Deploy Me!")
+                        .font(.largeTitle.weight(.bold))
+                        .foregroundStyle(.white)
+                        .multilineTextAlignment(.center)
+                    Text("เว็บแรกของน้อง live อยู่บน internet แล้ว")
+                        .font(.body)
+                        .foregroundStyle(.white.opacity(0.72))
+                }
                 
                 SkillBarView()
                     .frame(maxWidth: 400)
@@ -25,15 +40,21 @@ struct EndingView: View {
                 Button(action: {
                     gameState.reset()
                 }) {
-                    Text("เล่นอีกครั้ง")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .padding()
-                        .frame(maxWidth: 200)
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                    Label("เล่นอีกครั้ง", systemImage: "arrow.counterclockwise")
+                        .font(.headline.weight(.bold))
+                        .padding(.horizontal, 28)
+                        .padding(.vertical, 14)
+                        .background(SenpaiTheme.accent, in: Capsule())
+                        .foregroundStyle(SenpaiTheme.ink)
                 }
+            }
+            .padding(32)
+            .frame(maxWidth: min(580, geometry.size.width - 32))
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 30, style: .continuous))
+            .overlay(RoundedRectangle(cornerRadius: 30).stroke(Color.white.opacity(0.22), lineWidth: 1))
+            .shadow(color: .black.opacity(0.35), radius: 30, y: 15)
+            .padding(.vertical, 20)
+            }
             }
         }
     }
