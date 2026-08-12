@@ -26,11 +26,23 @@ struct ResourceImage: View {
     private func imagePath() -> String? {
         let bundle = Bundle.main
         let baseName = (name as NSString).deletingPathExtension
-        let ext = (name as NSString).pathExtension.isEmpty ? "jpg" : (name as NSString).pathExtension
-        if let folder, let path = bundle.path(forResource: baseName, ofType: ext, inDirectory: folder) {
-            return path
+        let ext = (name as NSString).pathExtension
+        if !ext.isEmpty {
+            if let folder, let path = bundle.path(forResource: baseName, ofType: ext, inDirectory: folder) {
+                return path
+            }
+            return bundle.path(forResource: baseName, ofType: ext)
         }
-        return bundle.path(forResource: baseName, ofType: ext)
+        // Try .png first, then .jpg
+        for possibleExt in ["png", "jpg"] {
+            if let folder, let path = bundle.path(forResource: baseName, ofType: possibleExt, inDirectory: folder) {
+                return path
+            }
+            if let path = bundle.path(forResource: baseName, ofType: possibleExt) {
+                return path
+            }
+        }
+        return nil
     }
 }
 

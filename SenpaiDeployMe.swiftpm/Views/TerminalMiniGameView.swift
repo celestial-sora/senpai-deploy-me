@@ -41,8 +41,11 @@ struct TerminalMiniGameView: View {
     }
 
     private var correctCount: Int {
-        zip(commands, targetCommands).prefix { $0.id == $1.id }.count
+        zip(commands, targetCommands).filter { $0.id == $1.id }.count
     }
+
+    @State private var inputCommand = ""
+    @FocusState private var isInputFocused: Bool
 
     var body: some View {
         VStack(spacing: 0) {
@@ -69,7 +72,7 @@ struct TerminalMiniGameView: View {
                 .padding(.horizontal, 24)
                 .padding(.top, 8)
 
-            Text("แตะ 2 ใบเพื่อสลับตำแหน่ง")
+            Text("แตะ 2 ใบเพื่อสลับตำแหน่ง หรือพิมพ์คำสั่งลง Terminal")
                 .font(.subheadline)
                 .foregroundStyle(.white.opacity(0.62))
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -79,7 +82,16 @@ struct TerminalMiniGameView: View {
             ProgressView(value: Double(correctCount), total: Double(commands.count))
                 .tint(SenpaiTheme.mint)
                 .padding(.horizontal, 24)
-                .padding(.top, 16)
+                .padding(.top, 12)
+
+            // Interactive Terminal Keyboard Prompt (iPad/iOS focusable)
+            TerminalInputRow(
+                inputCommand: $inputCommand,
+                isInputFocused: $isInputFocused,
+                onSubmit: submitTypedCommand
+            )
+            .padding(.horizontal, 24)
+            .padding(.top, 12)
 
             ScrollView {
                 VStack(spacing: 12) {
@@ -133,12 +145,30 @@ struct TerminalMiniGameView: View {
                 .padding()
             }
         }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                isInputFocused = true
+            }
+        }
         .frame(maxWidth: 680)
         .frame(maxHeight: .infinity)
         .background(Color(red: 0.045, green: 0.06, blue: 0.10), in: RoundedRectangle(cornerRadius: 28, style: .continuous))
         .overlay(RoundedRectangle(cornerRadius: 28).stroke(Color.white.opacity(0.18), lineWidth: 1))
         .shadow(color: .black.opacity(0.4), radius: 32, y: 18)
         .padding(12)
+    }
+
+    private func submitTypedCommand() {
+        let trimmed = inputCommand.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        guard !trimmed.isEmpty else { return }
+        
+        if let idx = commands.firstIndex(where: { $0.text.lowercased().starts(with: trimmed) }) {
+            selectCommand(at: idx)
+            inputCommand = ""
+        } else {
+            feedback = "ไม่พบคำสั่ง '\(inputCommand)' ลองดูคำสั่งในรายการ"
+            inputCommand = ""
+        }
     }
 
     private func selectCommand(at index: Int) {
@@ -171,5 +201,40 @@ struct TerminalMiniGameView: View {
             selectedIndex = index
             feedback = "เลือกคำสั่งอีก 1 ใบเพื่อสลับกับใบนี้"
         }
+    }
+}
+
+struct TerminalInputRow: View {
+    @Binding var inputCommand: String
+    @FocusState.Binding var isInputFocused: Bool
+    let onSubmit: () -> Void
+
+    var body: some View {
+        HStack(spacing: 10) {
+            Text("$")
+                .font(.system(.body, design: .monospaced).weight(.bold))
+                .foregroundStyle(SenpaiTheme.mint)
+
+            TextField("พิมพ์คำสั่ง git...", text: $inputCommand)
+                .font(.system(.body, design: .monospaced))
+                .foregroundStyle(.white)
+                .focused($isInputFocused)
+                .onSubmit(onSubmit)
+
+            if !inputCommand.isEmpty {
+                Button(action: onSubmit) {
+                    Text("RUN")
+                        .font(.caption.weight(.bold))
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .background(SenpaiTheme.mint, in: Capsule())
+                        .foregroundStyle(SenpaiTheme.ink)
+                }
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 10)
+        .background(Color.black.opacity(0.4), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+        .overlay(RoundedRectangle(cornerRadius: 12).stroke(isInputFocused ? SenpaiTheme.mint : Color.white.opacity(0.15), lineWidth: 1))
     }
 }

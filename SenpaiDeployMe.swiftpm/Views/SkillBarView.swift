@@ -52,8 +52,10 @@ struct SkillRow: View {
             
             Text("\(min(value, 100))%")
                 .foregroundColor(.white)
-                .font(.subheadline)
-                .frame(width: 29, alignment: .trailing)
+                .font(.subheadline.weight(.semibold))
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+                .frame(width: 44, alignment: .trailing)
         }
     }
 }

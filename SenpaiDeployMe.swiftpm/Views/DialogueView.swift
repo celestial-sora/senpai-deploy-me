@@ -42,75 +42,72 @@ struct DialogueView: View {
                 TerminalMiniGameView(isSecondTime: gameState.currentIndex > 10)
                     .frame(maxWidth: min(680, geometry.size.width - 24), maxHeight: min(580, geometry.size.height - 24))
             } else {
-                VStack {
-                    HStack {
-                        if geometry.size.width > 620 {
-                            Label("SENPAI DEPLOY ME", systemImage: "sparkles")
-                                .font(.caption.weight(.bold))
-                                .tracking(1.4)
-                                .foregroundStyle(.white.opacity(0.9))
-                        } else {
-                            Image(systemName: "sparkles")
-                                .foregroundStyle(.white.opacity(0.9))
-                        }
+                // Character Sprite Layer (Anchored to bottom, behind UI)
+                if let sprite = currentLine.sprite {
+                    VStack {
                         Spacer()
-                        Text("บทที่ \(chapterNumber)  /  5")
-                            .font(.caption.weight(.semibold))
-                            .foregroundStyle(.white.opacity(0.75))
-                        SkillBarView()
-                            .frame(width: min(220, max(140, geometry.size.width * 0.30)))
+                        ResourceImage(name: sprite, folder: "Sprites")
+                            .scaledToFit()
+                            .frame(maxHeight: max(380, geometry.size.height * 0.72))
+                            .offset(y: 40) // Anchor down slightly so character sits on bottom frame
+                            .transition(.opacity)
+                            .animation(.easeInOut, value: sprite)
+                    }
+                    .ignoresSafeArea(.all, edges: .bottom)
+                }
+
+                // Header Bar & Top Controls Layer
+                VStack {
+                    VStack(spacing: 8) {
+                        HStack {
+                            if geometry.size.width > 620 {
+                                Label("SENPAI DEPLOY ME", systemImage: "sparkles")
+                                    .font(.caption.weight(.bold))
+                                    .tracking(1.4)
+                                    .foregroundStyle(.white.opacity(0.9))
+                            } else {
+                                Image(systemName: "sparkles")
+                                    .foregroundStyle(.white.opacity(0.9))
+                            }
+                            Spacer()
+                            Text("บทที่ \(chapterNumber)  /  5")
+                                .font(.caption.weight(.semibold))
+                                .foregroundStyle(.white.opacity(0.75))
+                            if geometry.size.width >= 500 {
+                                SkillBarView()
+                                    .frame(width: min(220, max(140, geometry.size.width * 0.30)))
+                            }
+                        }
+                        if geometry.size.width < 500 {
+                            SkillBarView()
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                        }
                     }
                     .padding(.horizontal, min(24, geometry.size.width * 0.035))
                     .padding(.top, 10)
                     
                     Spacer()
-                    
-                    // Sprite
-                    if let sprite = currentLine.sprite {
-                        ResourceImage(name: sprite, folder: "Sprites")
-                            .scaledToFit()
-                            .frame(maxHeight: currentLine.choices != nil ? min(260, geometry.size.height * 0.28) : min(430, geometry.size.height * 0.42))
-                            .transition(.opacity)
-                            .animation(.easeInOut, value: sprite)
-                    }
-                    
-                    Spacer()
                 }
                 
+                // Dialogue Box & Interactive Choices Layer
                 VStack {
                     Spacer()
                     
                     if let choices = currentLine.choices {
-                        VStack(spacing: 12) {
-                            ForEach(Array(choices.enumerated()), id: \.element.id) { index, choice in
-                                Button(action: {
-                                    handleChoice(choice)
-                                }) {
-                                    HStack(spacing: 14) {
-                                        Text("0\(index + 1)")
-                                            .font(.caption.weight(.bold))
-                                            .foregroundStyle(SenpaiTheme.accent)
-                                        Text(choice.text)
-                                            .font(.body.weight(.semibold))
-                                            .foregroundStyle(.white)
-                                            .multilineTextAlignment(.leading)
-                                        Spacer()
-                                        Image(systemName: "arrow.right")
-                                            .font(.caption.weight(.bold))
-                                            .foregroundStyle(.white.opacity(0.55))
-                                    }
-                                    .padding(.horizontal, 18)
-                                    .padding(.vertical, 15)
-                                    .frame(maxWidth: 520)
-                                    .background(Color.white.opacity(0.13), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
-                                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.white.opacity(0.18), lineWidth: 1))
+                        Group {
+                            if #available(iOS 26.0, macOS 26.0, *) {
+                                GlassEffectContainer(spacing: 12) {
+                                    choiceList(choices)
                                 }
+                                .padding(.bottom, 16)
+                            } else {
+                                choiceList(choices)
+                                    .padding(.bottom, 16)
                             }
                         }
-                        .padding(.bottom, 20)
                         .zIndex(2)
                     } else {
-                        // Invisible area to advance text by tapping anywhere else
+                        // Tap anywhere outside choices to advance dialogue
                         Color.clear
                             .contentShape(Rectangle())
                             .onTapGesture {
@@ -143,8 +140,8 @@ struct DialogueView: View {
                     }
                     .padding(.horizontal, 8)
                     .padding(.bottom, 16)
-                    .background(Color.black.opacity(0.66), in: RoundedRectangle(cornerRadius: 24, style: .continuous))
-                    .overlay(RoundedRectangle(cornerRadius: 24).stroke(Color.white.opacity(0.2), lineWidth: 1))
+                    .background(Color.black.opacity(0.78), in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+                    .overlay(RoundedRectangle(cornerRadius: 24).stroke(Color.white.opacity(0.22), lineWidth: 1))
                     .padding(.horizontal, 20)
                     .padding(.bottom, min(22, geometry.size.height * 0.025))
                     .allowsHitTesting(currentLine.choices == nil)
@@ -193,5 +190,54 @@ struct DialogueView: View {
             gameState.skills[skill, default: 0] += effect
         }
         gameState.currentIndex = choice.nextIndex
+    }
+
+    @ViewBuilder
+    private func choiceList(_ choices: [Choice]) -> some View {
+        VStack(spacing: 12) {
+            ForEach(Array(choices.enumerated()), id: \.element.id) { index, choice in
+                choiceButton(choice, index: index)
+            }
+        }
+        .padding(.horizontal, 20)
+    }
+
+    @ViewBuilder
+    private func choiceButton(_ choice: Choice, index: Int) -> some View {
+        if #available(iOS 26.0, macOS 26.0, *) {
+            Button(action: { handleChoice(choice) }) {
+                choiceLabel(choice, index: index)
+            }
+            .buttonStyle(.plain)
+            .frame(maxWidth: 520)
+            .glassEffect(.regular, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        } else {
+            Button(action: { handleChoice(choice) }) {
+                choiceLabel(choice, index: index)
+                    .background(Color(red: 0.08, green: 0.10, blue: 0.16).opacity(0.85), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.white.opacity(0.2), lineWidth: 1))
+                    .shadow(color: .black.opacity(0.3), radius: 10, y: 5)
+            }
+            .buttonStyle(.plain)
+            .frame(maxWidth: 520)
+        }
+    }
+
+    private func choiceLabel(_ choice: Choice, index: Int) -> some View {
+        HStack(spacing: 14) {
+            Text("0\(index + 1)")
+                .font(.caption.weight(.bold))
+                .foregroundStyle(SenpaiTheme.accent)
+            Text(choice.text)
+                .font(.body.weight(.semibold))
+                .foregroundStyle(.white)
+                .multilineTextAlignment(.leading)
+            Spacer()
+            Image(systemName: "arrow.right")
+                .font(.caption.weight(.bold))
+                .foregroundStyle(.white.opacity(0.55))
+        }
+        .padding(.horizontal, 18)
+        .padding(.vertical, 15)
     }
 }
