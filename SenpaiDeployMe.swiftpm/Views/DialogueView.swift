@@ -2,7 +2,7 @@ import SwiftUI
 
 struct DialogueView: View {
     @EnvironmentObject var gameState: GameState
-    @State private var currentBackground: String = "bg_faculty"
+    @State private var currentBackground: String = "bg_workspace"
     
     var currentLine: DialogueLine {
         script[gameState.currentIndex]
@@ -39,7 +39,7 @@ struct DialogueView: View {
                 }
             
             if currentLine.isTerminalStep {
-                TerminalMiniGameView(isSecondTime: gameState.currentIndex > 10)
+                GitDragSortView()
                     .frame(maxWidth: min(680, geometry.size.width - 24), maxHeight: min(580, geometry.size.height - 24))
             } else {
                 // Character Sprite Layer (Anchored to bottom, behind UI)
@@ -70,7 +70,7 @@ struct DialogueView: View {
                                     .foregroundStyle(.white.opacity(0.9))
                             }
                             Spacer()
-                            Text("บทที่ \(chapterNumber)  /  3")
+                            Text("บทที่ \(chapterNumber)  /  2")
                                 .font(.caption.weight(.semibold))
                                 .foregroundStyle(.white.opacity(0.75))
                             if geometry.size.width >= 500 {
@@ -118,7 +118,7 @@ struct DialogueView: View {
                     VStack(alignment: .leading, spacing: 5) {
                         if !currentLine.speaker.isEmpty {
                             HStack(spacing: 8) {
-                                StatusDot(color: currentLine.speaker == "AI" ? SenpaiTheme.mint : SenpaiTheme.accent)
+                                StatusDot(color: SenpaiTheme.accent)
                                 Text(currentLine.speaker.uppercased())
                                     .font(.caption.weight(.bold))
                                     .tracking(1.2)
@@ -159,9 +159,8 @@ struct DialogueView: View {
 
     private var chapterNumber: Int {
         switch gameState.currentIndex {
-        case 0...3: return 1
-        case 4...8: return 2
-        default: return 3
+        case 0...2: return 1
+        default: return 2
         }
     }
     

@@ -14,7 +14,7 @@ struct StartView: View {
         ZStack {
             SenpaiTheme.ink
                 .ignoresSafeArea()
-            ResourceImage(name: "bg_faculty", folder: "Backgrounds")
+            ResourceImage(name: "bg_workspace", folder: "Backgrounds")
                 .scaledToFill()
                 .ignoresSafeArea()
                 .opacity(0.82)
