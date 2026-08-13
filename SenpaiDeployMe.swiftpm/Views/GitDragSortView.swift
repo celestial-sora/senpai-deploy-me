@@ -312,9 +312,7 @@ struct GitDragSortView: View {
 
             Button(action: checkAnswer) {
                 HStack(spacing: 8) {
-                    if checkState == .solved {
-                        Image(systemName: "checkmark.circle.fill")
-                    }
+                    Image(systemName: checkState == .solved ? "checkmark.circle.fill" : "checkmark.circle")
                     Text(checkState == .solved ? "เรียบร้อยแล้ว" : "ตรวจคำตอบ")
                         .font(.headline.weight(.bold))
                 }
