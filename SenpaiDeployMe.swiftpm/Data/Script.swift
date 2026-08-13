@@ -6,7 +6,7 @@ let script: [DialogueLine] = [
     DialogueLine(speaker: "Senpai", text: "Git คือตัวที่เซฟทุกจุดที่น้องเคยทำไว้ ถ้าพังก็ย้อนกลับมาดูประวัติได้เสมอ", sprite: "senpai_normal", background: nil, choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: nil),
     DialogueLine(speaker: "Senpai", text: "ลองจัดลำดับคำสั่งพวกนี้ให้ถูกต้องดูนะ ลากสลับตำแหน่งได้เลย แล้วกดตรวจคำตอบ", sprite: "senpai_smile", background: nil, choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: nil),
     DialogueLine(speaker: "", text: "", sprite: nil, background: nil, choices: nil, isTerminalStep: true, jumpIndex: nil, autoSkillEffect: nil),
-    DialogueLine(speaker: "Senpai", text: "เก่งมาก! จำแค่ init → status → add → commit → remote → push ก็เอาตัวรอดได้แล้ว", sprite: "senpai_smile", background: nil, choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: nil),
+    DialogueLine(speaker: "Senpai", text: "เก่งมาก! จำแค่ init → status → add → commit → remote → push ก็เอาตัวรอดได้แล้ว", sprite: "senpai_admire", background: nil, choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: nil),
     DialogueLine(speaker: "Senpai", text: "ต่อให้พลาดตรงไหน ประวัติที่ commit ไว้ก็ย้อนกลับมาดูได้เสมอ", sprite: "senpai_normal", background: nil, choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: nil),
-    DialogueLine(speaker: "Senpai", text: "ครั้งหน้าเอาไปใช้ push เว็บของตัวเองขึ้น GitHub แล้วก็ deploy ได้เลย โชคดีนะ!", sprite: "senpai_smile", background: "bg_ending", choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: ["git": 0])
+    DialogueLine(speaker: "Senpai", text: "พ...พี่เห็นน้องเรียนรู้ไวขนาดนี้แล้ว... รู้สึกภูมิใจจัง! ครั้งหน้าเอาไปใช้ push เว็บขึ้น GitHub แล้วก็ deploy ได้เลยนะ!", sprite: "senpai_blush", background: "bg_ending", choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: ["git": 0])
 ]
