@@ -49,7 +49,13 @@ struct StartView: View {
                                 .foregroundStyle(.white)
                             
                             HStack {
-                                TextField("รุ่นพี่จะเรียกคุณว่าอะไรดีน้าาา", text: $name)
+                                TextField(
+                                    text: $name,
+                                    prompt: Text("รุ่นพี่จะเรียกคุณว่าอะไรดีน้าาา")
+                                        .foregroundColor(.white.opacity(0.58))
+                                ) {
+                                    EmptyView()
+                                }
                                     .font(.title3.weight(.medium))
                                     .foregroundStyle(.white)
                                     .textFieldStyle(.plain)
@@ -98,20 +104,19 @@ struct StartView: View {
         .padding(.horizontal, 18)
         .padding(.vertical, 15)
 
-        if #available(iOS 26.0, macOS 26.0, *) {
-            Button(action: startGame) { label }
-                .foregroundStyle(canStart ? SenpaiTheme.ink : .white.opacity(0.45))
-                .buttonStyle(.glassProminent)
-                .tint(SenpaiTheme.accent)
-                .disabled(!canStart)
-        } else {
-            Button(action: startGame) {
-                label
-                    .foregroundStyle(canStart ? SenpaiTheme.ink : .white.opacity(0.45))
-                    .background(canStart ? SenpaiTheme.accent : Color.white.opacity(0.12), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
-            }
-            .buttonStyle(.plain)
-            .disabled(!canStart)
+        Button(action: startGame) {
+            label
+                .foregroundStyle(canStart ? SenpaiTheme.ink : .white.opacity(0.78))
+                .background(
+                    canStart ? SenpaiTheme.accent : SenpaiTheme.accent.opacity(0.34),
+                    in: RoundedRectangle(cornerRadius: 14, style: .continuous)
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                        .stroke(SenpaiTheme.accent.opacity(canStart ? 0.9 : 0.55), lineWidth: 1)
+                )
         }
+        .buttonStyle(.plain)
+        .disabled(!canStart)
     }
 }
