@@ -104,19 +104,31 @@ struct StartView: View {
         .padding(.horizontal, 18)
         .padding(.vertical, 15)
 
-        Button(action: startGame) {
-            label
-                .foregroundStyle(canStart ? SenpaiTheme.ink : .white.opacity(0.78))
-                .background(
-                    canStart ? SenpaiTheme.accent : SenpaiTheme.accent.opacity(0.34),
-                    in: RoundedRectangle(cornerRadius: 14, style: .continuous)
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .stroke(SenpaiTheme.accent.opacity(canStart ? 0.9 : 0.55), lineWidth: 1)
-                )
+        if #available(iOS 26.0, macOS 26.0, *) {
+            Button(action: startGame) {
+                label.foregroundStyle(canStart ? SenpaiTheme.ink : .white.opacity(0.78))
+            }
+            .buttonStyle(.plain)
+            .glassEffect(
+                .regular.tint(canStart ? SenpaiTheme.accent : SenpaiTheme.accent.opacity(0.34)),
+                in: RoundedRectangle(cornerRadius: 14, style: .continuous)
+            )
+            .disabled(!canStart)
+        } else {
+            Button(action: startGame) {
+                label
+                    .foregroundStyle(canStart ? SenpaiTheme.ink : .white.opacity(0.78))
+                    .background(
+                        canStart ? SenpaiTheme.accent : SenpaiTheme.accent.opacity(0.34),
+                        in: RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 14, style: .continuous)
+                            .stroke(SenpaiTheme.accent.opacity(canStart ? 0.9 : 0.55), lineWidth: 1)
+                    )
+            }
+            .buttonStyle(.plain)
+            .disabled(!canStart)
         }
-        .buttonStyle(.plain)
-        .disabled(!canStart)
     }
 }
