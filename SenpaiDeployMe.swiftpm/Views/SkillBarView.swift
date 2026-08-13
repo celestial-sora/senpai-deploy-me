@@ -15,9 +15,8 @@ struct SkillBarView: View {
                     .font(.caption)
                     .foregroundStyle(SenpaiTheme.accent)
             }
-            SkillRow(name: "Confidence", value: gameState.skills["confidence"] ?? 0, color: SenpaiTheme.gold)
             SkillRow(name: "Git", value: gameState.skills["git"] ?? 0, color: SenpaiTheme.violet)
-            SkillRow(name: "AI", value: gameState.skills["ai"] ?? 0, color: SenpaiTheme.accent)
+            SkillRow(name: "GitHub", value: gameState.skills["github"] ?? 0, color: SenpaiTheme.accent)
         }
         .padding(14)
         .background(Color.black.opacity(0.42), in: RoundedRectangle(cornerRadius: 18, style: .continuous))

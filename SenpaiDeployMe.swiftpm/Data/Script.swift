@@ -1,60 +1,46 @@
 import Foundation
 
+// A short, tap-through lesson designed to be completed in roughly three minutes.
 let script: [DialogueLine] = [
-    // 0: ฉาก 1 — วันแรกเข้าคณะ
-    DialogueLine(speaker: "Narrator", text: "วันแรกของการเป็นนักศึกษาสาขาวิทยาการคอมพิวเตอร์ คณะเทคโนโลยีสารสนเทศ...", sprite: nil, background: "bg_faculty", choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: nil),
-    
+    // 0: Opening — the problem Git solves
+    DialogueLine(speaker: "Narrator", text: "งานกลุ่มใกล้ส่ง แต่ไฟล์ชื่อ final_v7_แก้จริงล่าสุด อยู่เต็มโฟลเดอร์…", sprite: nil, background: "bg_faculty", choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: nil),
+
     // 1
-    DialogueLine(speaker: "Senpai", text: "ว่าไงน้อง ตื่นเต้นมั้ย? เดี๋ยวพี่พาไปทำเว็บส่วนตัวของตัวเองกันเลย จบวันนี้ต้องได้เว็บ live จริงๆ", sprite: "senpai_smile", background: nil, choices: [
-        Choice(text: "ตื่นเต้นมาก! ไปกันเลย", skillEffect: ["confidence": 5], nextIndex: 2),
-        Choice(text: "แต่หนูโค้ดไม่เป็นเลยนะ...", skillEffect: ["confidence": 5], nextIndex: 3)
+    DialogueLine(speaker: "Senpai", text: "ไม่ต้องตกใจนะ! ใน 3 นาที พี่จะพาใช้ Git กับ GitHub ให้เป็นภาพเดียวกัน", sprite: "senpai_smile", background: nil, choices: [
+        Choice(text: "เริ่มเลย — Git กับ GitHub ต่างกันยังไง?", skillEffect: ["git": 5], nextIndex: 2),
+        Choice(text: "ขอแบบสั้นและใช้ได้จริง", skillEffect: ["git": 5], nextIndex: 3)
     ], isTerminalStep: false, jumpIndex: nil, autoSkillEffect: nil),
-    
+
     // 2 (Choice A)
-    DialogueLine(speaker: "Senpai", text: "เยี่ยม! ความมั่นใจคือจุดเริ่มต้นที่ดี!", sprite: "senpai_smile", background: nil, choices: nil, isTerminalStep: false, jumpIndex: 4, autoSkillEffect: nil),
-    
+    DialogueLine(speaker: "Senpai", text: "Git คือสมุดบันทึกประวัติของโปรเจกต์ในเครื่องเรา ส่วน GitHub คือที่เก็บและแชร์โปรเจกต์นั้นบนออนไลน์", sprite: "senpai_normal", background: nil, choices: nil, isTerminalStep: false, jumpIndex: 4, autoSkillEffect: nil),
+
     // 3 (Choice B)
-    DialogueLine(speaker: "Senpai", text: "ไม่เป็นไร ไม่ต้องมีพื้นฐานก็ทำได้ พี่จะสอนทีละสเต็ป", sprite: "senpai_normal", background: nil, choices: nil, isTerminalStep: false, jumpIndex: 4, autoSkillEffect: nil),
-    
-    // 4: ฉาก 2 — AI Vibecoding ได้เว็บก่อน
-    DialogueLine(speaker: "Senpai", text: "ก่อนอื่นมาสร้างเว็บกันก่อนเลย! ไม่ต้องเขียนโค้ดเองทั้งหมดหรอก เราใช้ AI Vibecoding ได้", sprite: "senpai_normal", background: "bg_workspace", choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: nil),
-    
+    DialogueLine(speaker: "Senpai", text: "จำง่าย ๆ: Git บันทึกงานในเครื่อง, GitHub เก็บสำเนาไว้บนออนไลน์และให้ทีมเห็นร่วมกัน", sprite: "senpai_normal", background: nil, choices: nil, isTerminalStep: false, jumpIndex: 4, autoSkillEffect: nil),
+
+    // 4: Git basics
+    DialogueLine(speaker: "Senpai", text: "เริ่มในโฟลเดอร์โปรเจกต์ด้วย git init — เท่านี้ Git ก็เริ่มติดตามงานของเราแล้ว", sprite: "senpai_normal", background: "bg_workspace", choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: nil),
+
     // 5
-    DialogueLine(speaker: "Senpai", text: "ลองพิมพ์สั่ง AI ว่า 'สร้างเว็บพอร์ตโฟลิโอ มีชื่อ รูป และลิงก์โซเชียล'", sprite: "senpai_smile", background: nil, choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: nil),
-    
+    DialogueLine(speaker: "Senpai", text: "แก้ไฟล์เสร็จ ให้ใช้ git status ดูก่อนว่ามีอะไรเปลี่ยนบ้าง เหมือนเช็กลิสต์ก่อนเซฟ", sprite: "senpai_smile", background: nil, choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: nil),
+
     // 6
-    DialogueLine(speaker: "AI", text: "กำลังสร้างโค้ด...\n```html\n<h1>My Portfolio</h1>\n<p>Welcome to my page!</p>\n```", sprite: nil, background: nil, choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: nil),
-    
-    // 7
-    DialogueLine(speaker: "Senpai", text: "เห็นมั้ย AI เขียนโค้ด HTML/CSS ให้เราเรียบร้อยแล้ว! ได้หน้าเว็บพร้อมลุยแล้วนะ", sprite: "senpai_smile", background: nil, choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: ["ai": 30]),
-    
-    // 8: ฉาก 3 — สอน Git เพื่อเวอร์ชันคอนโทรลและเตรียมส่งงาน
-    DialogueLine(speaker: "Senpai", text: "ทีนี้พอได้เว็บแล้ว เราต้องใช้ Git ช่วยเซฟงานแบบมี 'ประวัติ' เพื่อส่งขึ้นออนไลน์", sprite: "senpai_normal", background: nil, choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: nil),
-    
-    // 9
-    DialogueLine(speaker: "Senpai", text: "มาลองจัดเรียงคำสั่ง Git ใน Terminal กัน!", sprite: "senpai_smile", background: nil, choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: nil),
-    
-    // 10: Terminal Minigame 1
+    DialogueLine(speaker: "Senpai", text: "git add . เลือกไฟล์ที่จะบันทึก แล้ว git commit -m \"อธิบายสิ่งที่เปลี่ยน\" เพื่อสร้างจุดย้อนกลับได้", sprite: "senpai_normal", background: nil, choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: nil),
+
+    // 7: Hands-on practice
+    DialogueLine(speaker: "Senpai", text: "ลองเรียงลำดับคำสั่งด้วยตัวเองนะ: เริ่มติดตาม → ตรวจงาน → เตรียมบันทึก → commit → ส่งขึ้น GitHub", sprite: "senpai_smile", background: nil, choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: nil),
+
+    // 8: Terminal mini-game
     DialogueLine(speaker: "", text: "", sprite: nil, background: nil, choices: nil, isTerminalStep: true, jumpIndex: nil, autoSkillEffect: nil),
-    
+
+    // 9: GitHub connection
+    DialogueLine(speaker: "Senpai", text: "เยี่ยม! ก่อน push ครั้งแรก ให้สร้าง repository ใหม่บน GitHub แล้วคัดลอก URL มาเชื่อมด้วย git remote add origin <github-url>", sprite: "senpai_smile", background: "bg_browser", choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: nil),
+
+    // 10
+    DialogueLine(speaker: "Senpai", text: "จากนั้น git push origin main จะส่ง commits ในเครื่องขึ้น GitHub ทุกครั้งที่ทำงานเสร็จ: status → add → commit → push", sprite: "senpai_normal", background: nil, choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: ["github": 50]),
+
     // 11
-    DialogueLine(speaker: "Senpai", text: "เก่งมาก! เท่านี้ก็เข้าใจลำดับคำสั่ง Git พื้นฐานแล้ว", sprite: "senpai_smile", background: nil, choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: nil),
-    
-    // 12: ฉาก 4 — Push ขึ้น GitHub + Deploy บน Vercel
-    DialogueLine(speaker: "Senpai", text: "พร้อมแล้ว! มาทวนขั้นตอน push งานส่ง GitHub กันอีกรอบ: add → commit → push", sprite: "senpai_normal", background: nil, choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: nil),
-    
-    // 13: Terminal Minigame 2
-    DialogueLine(speaker: "", text: "", sprite: nil, background: nil, choices: nil, isTerminalStep: true, jumpIndex: nil, autoSkillEffect: nil),
-    
-    // 14
-    DialogueLine(speaker: "Senpai", text: "ต่อไปเอาไฟล์นี้ไป deploy ที่ Vercel\nเข้า vercel.com → Login ด้วย GitHub → Import repo → กด Deploy", sprite: "senpai_smile", background: "bg_browser", choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: nil),
-    
-    // 15
-    DialogueLine(speaker: "System", text: "Deploying... ✅ Deployed Successfully!", sprite: nil, background: nil, choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: nil),
-    
-    // 16: ฉาก 5 — Ending
-    DialogueLine(speaker: "Senpai", text: "ยินดีด้วย! นี่คือเว็บของน้องเองแล้ว live อยู่บน internet จริงๆ\n(your-name.vercel.app)", sprite: "senpai_smile", background: "bg_ending", choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: nil),
-    
-    // 17
-    DialogueLine(speaker: "Narrator", text: "และนี่คือจุดเริ่มต้นของ Web Developer คนใหม่...", sprite: nil, background: nil, choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: nil)
+    DialogueLine(speaker: "Senpai", text: "ถ้าพลาด ก็เปิดประวัติ commit เพื่อดูว่าอะไรเปลี่ยนไปได้ และ GitHub ทำให้เพื่อนร่วมทีมเห็นงานชุดเดียวกัน", sprite: "senpai_smile", background: nil, choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: nil),
+
+    // 12: Closing
+    DialogueLine(speaker: "Narrator", text: "จบแล้ว! น้องรู้เส้นทางของงานหนึ่งรอบแล้ว: Git เก็บประวัติในเครื่อง และ GitHub เก็บงานไว้ให้ทีมเข้าถึง", sprite: nil, background: "bg_ending", choices: nil, isTerminalStep: false, jumpIndex: nil, autoSkillEffect: ["git": 50])
 ]

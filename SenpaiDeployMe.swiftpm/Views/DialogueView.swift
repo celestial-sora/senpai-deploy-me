@@ -61,7 +61,7 @@ struct DialogueView: View {
                     VStack(spacing: 8) {
                         HStack {
                             if geometry.size.width > 620 {
-                                Label("SENPAI DEPLOY ME", systemImage: "sparkles")
+                                Label("SENPAI GIT LESSON", systemImage: "sparkles")
                                     .font(.caption.weight(.bold))
                                     .tracking(1.4)
                                     .foregroundStyle(.white.opacity(0.9))
@@ -70,7 +70,7 @@ struct DialogueView: View {
                                     .foregroundStyle(.white.opacity(0.9))
                             }
                             Spacer()
-                            Text("บทที่ \(chapterNumber)  /  5")
+                            Text("บทที่ \(chapterNumber)  /  3")
                                 .font(.caption.weight(.semibold))
                                 .foregroundStyle(.white.opacity(0.75))
                             if geometry.size.width >= 500 {
@@ -160,10 +160,8 @@ struct DialogueView: View {
     private var chapterNumber: Int {
         switch gameState.currentIndex {
         case 0...3: return 1
-        case 4...7: return 2
-        case 8...11: return 3
-        case 12...15: return 4
-        default: return 5
+        case 4...8: return 2
+        default: return 3
         }
     }
     

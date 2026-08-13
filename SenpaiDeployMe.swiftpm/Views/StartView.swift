@@ -28,15 +28,15 @@ struct StartView: View {
                         .shadow(color: SenpaiTheme.accent.opacity(0.7), radius: 16)
 
                     VStack(spacing: 8) {
-                        Text("SENPAI DEPLOY ME")
+                        Text("SENPAI GIT IN 3 MINUTES")
                             .font(.caption.weight(.bold))
                             .tracking(2.4)
                             .foregroundStyle(SenpaiTheme.accent)
-                        Text("พร้อมเริ่มภารกิจหรือยัง?")
+                        Text("พร้อมใช้ Git หรือยัง?")
                             .font(.largeTitle.weight(.bold))
                             .foregroundStyle(.white)
                             .multilineTextAlignment(.center)
-                        Text("สร้างเว็บแรกของคุณให้ live บน internet")
+                        Text("เรียน Git และ GitHub แบบสั้น ใช้ได้จริง")
                             .font(.body)
                             .foregroundStyle(.white.opacity(0.72))
                             .multilineTextAlignment(.center)
