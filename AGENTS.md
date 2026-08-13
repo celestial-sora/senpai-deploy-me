@@ -2,7 +2,7 @@
 
 ## Project overview
 
-`Senpai Deploy Me` is a SwiftUI iOS 16 app packaged as a Swift Package. It supports iPhone and iPad and presents an interactive Thai-language lesson/game about Git, AI, and deployment.
+`Senpai Push Me` is a SwiftUI iOS 16 app packaged as a Swift Package. It supports iPhone and iPad and presents an interactive Thai-language lesson/game about Git, AI, and deployment.
 
 The app source is under `SenpaiDeployMe.swiftpm/`:
 

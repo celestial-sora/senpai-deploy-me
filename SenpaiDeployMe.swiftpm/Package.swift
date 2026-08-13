@@ -6,15 +6,15 @@ import PackageDescription
 import AppleProductTypes
 
 let package = Package(
-    name: "Senpai Deploy Me",
+    name: "Senpai Push Me",
     platforms: [
         .iOS("16.0")
     ],
     products: [
         .iOSApplication(
-            name: "Senpai Deploy Me",
+            name: "Senpai Push Me",
             targets: ["AppModule"],
-            bundleIdentifier: "com.example.SenpaiDeployMe",
+            bundleIdentifier: "com.example.SenpaiPushMe",
             displayVersion: "1.0",
             bundleVersion: "1",
             appIcon: .placeholder(icon: .gamepad),
@@ -43,14 +43,14 @@ let package = Package(
 )
 #else
 let package = Package(
-    name: "Senpai Deploy Me",
+    name: "Senpai Push Me",
     platforms: [
         .macOS("13.0"),
         .iOS("16.0")
     ],
     products: [
         .executable(
-            name: "SenpaiDeployMe",
+            name: "SenpaiPushMe",
             targets: ["AppModule"]
         )
     ],
